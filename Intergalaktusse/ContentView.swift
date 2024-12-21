@@ -8,16 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var animateGradient = false
+    
     var body: some View {
-        TimelineView(.animation(minimumInterval: 3.0)) { _ in
-            VStack(alignment: .center) {
-                Text("Makapre")
-                    .font(.custom("", size: 82.0))
-                    .foregroundStyle(Color.random())
-                
-//                Image(.dvdLogo)
-//                    .frame(height: 150)
-//                    .tint(.red)
+        TimelineView(.animation(minimumInterval: Double.random(in: 3.0...13.0))) { _ in
+            ZStack {
+//                LinearGradient(colors: [.purple, .yellow], startPoint: animateGradient ? .topLeading : .bottomLeading, endPoint: animateGradient ? .bottomTrailing : .topTrailing)
+//                    .ignoresSafeArea()
+//                    .onAppear {
+//                        withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: true)) {
+//                            animateGradient.toggle()
+//                        }
+//                    }
+                LinearGradient(colors: [.purple, .yellow], startPoint: animateGradient ? .topLeading : .bottomLeading, endPoint: animateGradient ? .bottomTrailing : .topTrailing)
+                    .hueRotation(.degrees(animateGradient ? 45 : 0))
+                    .ignoresSafeArea()
+                    .onAppear {
+                        withAnimation(.easeInOut(duration: 5.0).repeatForever(autoreverses: true)) {
+                            animateGradient.toggle()
+                        }
+                    }
+//                VStack(alignment: .center) {
+//                    Text("Makapre")
+//                        .font(.custom("", size: 82.0))
+//                        .foregroundStyle(Color.random())
+//                    
+//                    //                Image(.dvdLogo)
+//                    //                    .frame(height: 150)
+//                    //                    .tint(.red)
+//                }
+                BouncingTextView(text: "Makapre", duration: Double.random(in: 0.01...0.04))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -26,4 +46,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .frame(width: 800, height: 500)
 }
