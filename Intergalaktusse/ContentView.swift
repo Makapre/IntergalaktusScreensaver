@@ -6,9 +6,18 @@
 //
 
 import SwiftUI
+import ScreenSaver
 
 struct ContentView: View {
     @State private var animateGradient = false
+    
+    private var textToDisplay: String = "Standardtext"
+    
+    init() {
+        if let savedText = ScreenSaverDefaults(forModuleWithName: Bundle.main.bundleIdentifier!)?.string(forKey: "TextToDisplay") {
+            self.textToDisplay = savedText
+        }
+    }
     
     var body: some View {
         TimelineView(.animation(minimumInterval: Double.random(in: 3.0...13.0))) { _ in
@@ -37,7 +46,7 @@ struct ContentView: View {
 //                    //                    .frame(height: 150)
 //                    //                    .tint(.red)
 //                }
-                BouncingTextView(text: "Makapre", duration: Double.random(in: 0.01...0.04))
+                BouncingTextView(text: textToDisplay, duration: Double.random(in: 0.01...0.04))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
